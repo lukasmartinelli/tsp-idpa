@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EE599BDD-0EBC-46EB-8D29-3D4EFE4C6BE3}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TSP</RootNamespace>
+    <AssemblyName>TSP</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App\definitions\bootstrap.d.ts" />
+    <Content Include="App\definitions\google.maps.d.ts" />
+    <Content Include="App\definitions\history.d.ts" />
+    <Content Include="App\definitions\jquery.d.ts" />
+    <Content Include="App\definitions\knockout.d.ts" />
+    <Content Include="App\definitions\lawnchair.d.ts" />
+    <Content Include="App\definitions\qunit.d.ts" />
+    <Content Include="App\definitions\require.d.ts" />
+    <Content Include="App\definitions\simrou.d.ts" />
+    <Content Include="App\definitions\underscore.d.ts" />
+    <TypeScriptCompile Include="App\scripts\tsp.algorithm.ts" />
+    <Content Include="App\scripts\tsp.algorithm.js">
+      <DependentUpon>tsp.algorithm.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.aoc.ts" />
+    <Content Include="App\scripts\tsp.aoc.js">
+      <DependentUpon>tsp.aoc.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.app.ts" />
+    <Content Include="App\scripts\tsp.app.js">
+      <DependentUpon>tsp.app.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.backtracking.ts" />
+    <Content Include="App\scripts\tsp.backtracking.js">
+      <DependentUpon>tsp.backtracking.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.graph.ts" />
+    <Content Include="App\scripts\tsp.graph.js">
+      <DependentUpon>tsp.graph.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.ui.algorithm.ts" />
+    <TypeScriptCompile Include="App\scripts\tsp.mst.ts" />
+    <Content Include="App\scripts\tsp.mst.js">
+      <DependentUpon>tsp.mst.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.twoapprox.ts" />
+    <Content Include="App\scripts\tsp.twoapprox.js">
+      <DependentUpon>tsp.twoapprox.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.ui.algorithm.js">
+      <DependentUpon>tsp.ui.algorithm.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.ui.bindings.ts" />
+    <Content Include="App\scripts\tsp.ui.bindings.js">
+      <DependentUpon>tsp.ui.bindings.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.ui.graph.ts" />
+    <Content Include="App\scripts\tsp.ui.graph.js">
+      <DependentUpon>tsp.ui.graph.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.ui.result.ts" />
+    <Content Include="App\scripts\tsp.ui.result.js">
+      <DependentUpon>tsp.ui.result.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.ui.start.ts" />
+    <Content Include="App\scripts\tsp.ui.start.js">
+      <DependentUpon>tsp.ui.start.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.visual.graph.ts" />
+    <TypeScriptCompile Include="App\scripts\tsp.ui.wizard.ts" />
+    <Content Include="App\scripts\tsp.ui.wizard.js">
+      <DependentUpon>tsp.ui.wizard.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.visual.graph.js">
+      <DependentUpon>tsp.visual.graph.ts</DependentUpon>
+    </Content>
+    <TypeScriptCompile Include="App\scripts\tsp.visual.maps.ts" />
+    <Content Include="App\scripts\tsp.visual.maps.js">
+      <DependentUpon>tsp.visual.maps.ts</DependentUpon>
+    </Content>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Content\main.css" />
+    <Content Include="index.html" />
+    <Content Include="App\scripts\tsp.ui.bindings.js.map">
+      <DependentUpon>tsp.ui.bindings.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.visual.graph.js.map">
+      <DependentUpon>tsp.visual.graph.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.graph.js.map">
+      <DependentUpon>tsp.graph.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.backtracking.js.map">
+      <DependentUpon>tsp.backtracking.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.aoc.js.map">
+      <DependentUpon>tsp.aoc.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.algorithm.js.map">
+      <DependentUpon>tsp.algorithm.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.ui.graph.js.map">
+      <DependentUpon>tsp.ui.graph.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.ui.start.js.map">
+      <DependentUpon>tsp.ui.start.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.ui.algorithm.js.map">
+      <DependentUpon>tsp.ui.algorithm.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.ui.result.js.map">
+      <DependentUpon>tsp.ui.result.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.mst.js.map">
+      <DependentUpon>tsp.mst.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.twoapprox.js.map">
+      <DependentUpon>tsp.twoapprox.ts</DependentUpon>
+    </Content>
+    <Content Include="App\scripts\tsp.app.js.map">
+      <DependentUpon>tsp.app.ts</DependentUpon>
+    </Content>
+    <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-1.9.1.js" />
+    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\knockout-2.2.1.debug.js" />
+    <Content Include="Scripts\knockout-2.2.1.js" />
+    <Content Include="Scripts\lawnchair-0.6.1.js" />
+    <Content Include="Scripts\lawnchair-0.6.1.min.js" />
+    <Content Include="Scripts\lawnchair-adapter-ie-userdata-0.6.1.js" />
+    <Content Include="Scripts\qunit.js" />
+    <Content Include="Scripts\require.js" />
+    <Content Include="Scripts\simrou.js" />
+    <Content Include="Scripts\underscore.js" />
+    <Content Include="Scripts\underscore.min.js" />
+    <Content Include="Web.config" />
+    <Content Include="Scripts\jquery-1.9.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App\templates\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:8456/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

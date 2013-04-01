@@ -1,0 +1,18 @@
+﻿#tsp-map-canvas {
+    width: 100%;
+}
+
+/*
+#tsp-wizard div.well {
+    min-height: 800px;
+}*/
+
+.nav-pills > li > a.disabled {
+    color: #333333;
+    background-color: #DDDDDD;
+    cursor: default;
+}
+
+.nav-pills > li > a.disabled:hover {
+    background-color: #DDDDDD;
+}
