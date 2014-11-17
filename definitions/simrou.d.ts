@@ -1,8 +1,8 @@
-class Simrou {
+declare class Simrou {
     constructor(initialRoutes?: Route[]);
-    eventSupported: bool;
-    addRoute(pattern: string, caseSensitive?: bool);
-    addRoutes(routes: Route[], caseSensitive?: bool);
+    eventSupported: boolean;
+    addRoute(pattern: string, caseSensitive?: boolean);
+    addRoutes(routes: Route[], caseSensitive?: boolean);
     removeRoute(route: Route);
     navigate(hash: string);
     resolve(hash: string, method: string);
@@ -10,12 +10,12 @@ class Simrou {
     resolveHash(event);
     handleFormSubmit(event);
     listen();
-    start(initialHash?: string, observeHash?: bool, observeForms?: bool);
+    start(initialHash?: string, observeHash?: boolean, observeForms?: boolean);
     stop();
-}
+    }
 
-class Route {
-    constructor(pattern: string, caseSensitive?: bool);
+declare class Route {
+    constructor(pattern: string, caseSensitive?: boolean);
     match(hash: string);
     assembly(values: any[]);
     toString(): string;

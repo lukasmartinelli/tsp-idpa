@@ -1,5 +1,4 @@
 /// <reference path="../definitions/knockout.d.ts" />
-/// <reference path="../definitions/simrou.d.ts" />
 /// <reference path="tsp.aoc.ts" />
 /// <reference path="tsp.graph.ts" />
 /// <reference path="tsp.ui.wizard.ts" />

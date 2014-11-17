@@ -1,4 +1,4 @@
-class Lawnchair {
+interface Lawnchair {
     constructor(callback: () => void );
     keys(callback: (keys:string[]) => void);
     /** save an object */
@@ -11,18 +11,19 @@ class Lawnchair {
     get (key : string, callback: (obj) => void);
 
     /** check if exists in the collection passing boolean to callback */
-    exists(key: string, callback: (exists:bool) => void);
+    exists(key: string, callback: (exists:boolean) => void);
 
     /** iterate collection passing: obj, index to callback */
     each(callback: (record,index:number) => void);
 
     /** returns all the objs to the callback as an array */
-    all(callback: (records : Array) => void);
+    all(callback: (records : Array<{}>) => void);
 
     /** remove a doc or collection of em */
     remove(key: string, callback);
 
-        /** destroy everything */
+    /** destroy everything */
     nuke(callback?);
 }
+
 declare function Lawnchair(callback: (context : Lawnchair) => void) : Lawnchair;

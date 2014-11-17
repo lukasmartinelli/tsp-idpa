@@ -5,7 +5,7 @@
 module tsp.aoc {
     export class PheromonEdge extends tsp.graph.Edge {
         private _pheromon = 0;
-        private _pheromonUpdates = new number[];
+        private _pheromonUpdates = new Array<number>();
 
         pheronom(): number {
             return this._pheromon;
@@ -103,7 +103,7 @@ module tsp.aoc {
             var currentVertex = startVertex;
 
             while (path.length < vertices.length) {
-                var probabilities = new number[];
+            var probabilities = new Array<number>();
                 for (var i = 0; i < vertices.length; i++) {
                     if (_.indexOf(path, vertices[i]) == -1) {
                         var vertex = vertices[i];

@@ -63,7 +63,7 @@ module tsp.visual.maps {
             var pheromonSum = 0;
             var edgeCount = 0;
             var edges = graph.getEdges();
-            _.forEach(edges, (edge: tsp.tsp.aoc.PheromonEdge) => {
+            _.forEach(edges, (edge: tsp.aoc.PheromonEdge) => {
                 pheromonSum += edge.pheronom();
                 edgeCount++;
             });
@@ -86,7 +86,7 @@ module tsp.visual.maps {
             this._map = map;
             var edges = graph.getEdges();
 
-            _.forEach(edges, (edge: tsp.tsp.aoc.PheromonEdge) => {
+            _.forEach(edges, (edge: tsp.aoc.PheromonEdge) => {
                 var from = <tsp.visual.graph.GoogleAddressVertex>edge.from;
                 var to = <tsp.visual.graph.GoogleAddressVertex>edge.to;
                 var line = new google.maps.Polyline({
@@ -178,7 +178,7 @@ module tsp.visual.maps {
             @param route The route to get directions for.
         */
         private getDirections(route: tsp.graph.Route) {
-            var deferred = $.Deferred();
+        var deferred = $.Deferred<google.maps.DirectionsResult>();
             var vertices = route.getVertices();
 
             var start = <tsp.visual.graph.GoogleAddressVertex>vertices[0];
@@ -194,11 +194,11 @@ module tsp.visual.maps {
                 travelMode: google.maps.TravelMode.DRIVING,
                 avoidHighways: false,
                 avoidTolls: false
-            }, (result, status) => {
+            }, (result: google.maps.DirectionsResult, status: google.maps.DirectionsStatus) => {
                 if (status == google.maps.DirectionsStatus.OK) {
                     deferred.resolve(result);
                 } else {
-                    deferred.fail('Could not draw route: ' + status);
+                    deferred.reject('Could not draw route: ' + status);
                 }
             });
 

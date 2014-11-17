@@ -55,7 +55,7 @@ module tsp.backtracking {
             }
         }
 
-        private isBestRoute(route: tsp.graph.Route): bool {
+        private isBestRoute(route: tsp.graph.Route): boolean {
             return this._bestRoute == undefined || route.getTotalWeight() < this._bestRoute.getTotalWeight();
         }
     }

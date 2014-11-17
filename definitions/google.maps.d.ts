@@ -1,3 +1,8 @@
+// Type definitions for Google Geolocation 0.4.8
+// Project: https://developers.google.com/maps/
+// Definitions by: Folia A/S <http://www.folia.dk>
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+
 /*
 The MIT License
 
@@ -26,20 +31,20 @@ declare module google.maps {
 
     /***** MVC *****/
     export class MVCObject {
-        constructor();
-        bindTo(key: string, target: MVCObject, targetKey?: string, noNotify?: bool): void;
+        constructor ();
+        addListener(eventName: string, handler: (...args: any[]) => void): MapsEventListener;
+        bindTo(key: string, target: MVCObject, targetKey?: string, noNotify?: boolean): void;
         changed(key: string): void;
-        get (key: string): any;
+        get(key: string): any;
         notify(key: string): void;
-        set (key: string, value: any): void;
+        set(key: string, value: any): void;
         setValues(values: any): void;
-        setValues(values: undefined);
         unbind(key: string): void;
         unbindAll(): void;
     }
 
     export class MVCArray extends MVCObject {
-        constructor(array?: any[]);
+        constructor (array?: any[]);
         clear(): void;
         forEach(callback: (elem: any, index: number) => void ): void;
         getArray(): any[];
@@ -54,8 +59,8 @@ declare module google.maps {
 
     /***** Map *****/
     export class Map extends MVCObject {
-        constructor(mapDiv: Element, opts?: MapOptions);
-        fitBounds(bounds: LatLngBounds);
+        constructor (mapDiv: Element, opts?: MapOptions);
+        fitBounds(bounds: LatLngBounds): void;
         getBounds(): LatLngBounds;
         getCenter(): LatLng;
         getDiv(): Element;
@@ -75,40 +80,46 @@ declare module google.maps {
         setStreetView(panorama: StreetViewPanorama): void;
         setTilt(tilt: number): void;
         setZoom(zoom: number): void;
+        controls: MVCArray[]; //Array.<MVCArray.<Node >>
+        mapTypes: MapTypeRegistry;
+        overlayMapTypes: MVCArray; // MVCArray.<MapType>
     }
 
     export interface MapOptions {
         backgroundColor?: string;
         center?: LatLng;
-        disableDefaultUI?: bool;
-        disableDoubleClickZoom?: bool;
-        draggable?: bool;
+        disableDefaultUI?: boolean;
+        disableDoubleClickZoom?: boolean;
+        draggable?: boolean;
         draggableCursor?: string;
         draggingCursor?: string;
         heading?: number;
-        keyboardShortcuts?: bool;
-        mapMaker?: bool;
-        mapTypeControl?: bool;
+        keyboardShortcuts?: boolean;
+        mapMaker?: boolean;
+        mapTypeControl?: boolean;
         mapTypeControlOptions?: MapTypeControlOptions;
+        navigationControl?: boolean;
+        navigationControlOptions?: NavigationControlOptions;
         mapTypeId?: MapTypeId;
         maxZoom?: number;
         minZoom?: number;
-        noClear?: bool;
-        overviewMapControl?: bool;
+        noClear?: boolean;
+        overviewMapControl?: boolean;
         overviewMapControlOptions?: OverviewMapControlOptions;
-        panControl?: bool;
+        panControl?: boolean;
         panControlOptions?: PanControlOptions;
-        rotateControl?: bool;
+        rotateControl?: boolean;
         rotateControlOptions?: RotateControlOptions;
-        scaleControl?: bool;
+        scaleControl?: boolean;
         scaleControlOptions?: ScaleControlOptions;
-        scrollwheel?: bool;
-        streetView?: bool;
+        scrollwheel?: boolean;
+        streetView?: StreetViewPanorama;
+        streetViewControl?: boolean;
         streetViewControlOptions?: StreetViewControlOptions;
         styles?: MapTypeStyle[];
         tilt?: number;
         zoom?: number;
-        zoomControl?: bool;
+        zoomControl?: boolean;
         zoomControlOptions?: ZoomControlOptions;
     }
 
@@ -133,7 +144,7 @@ declare module google.maps {
     }
 
     export interface OverviewMapControlOptions {
-        opened?: bool;
+        opened?: boolean;
     }
 
     export interface PanControlOptions {
@@ -183,29 +194,40 @@ declare module google.maps {
         TOP_RIGHT
     }
 
+    export interface NavigationControlOptions {
+        position?: ControlPosition;
+        style?: NavigationControlStyle;
+    }
+
+    export enum NavigationControlStyle {
+        DEFAULT,
+        SMALL,
+        ANDROID,
+        ZOOM_PAN
+    }
+
     /***** Overlays *****/
     export class Marker extends MVCObject {
         static MAX_ZINDEX: number;
-        constructor(opts?: MarkerOptions);
+        constructor (opts?: MarkerOptions);
         getAnimation(): Animation;
-        getClickable(): bool;
+        getClickable(): boolean;
         getCursor(): string;
-        getDraggable(): bool;
-        getFlat(): bool;
+        getDraggable(): boolean;
+        getFlat(): boolean;
         getIcon(): MarkerImage;
-        getMap(): Map;
-        getMap(): StreetViewPanorama;
+        getMap(): any; // Map or StreetViewPanorama
         getPosition(): LatLng;
         getShadow(): MarkerImage;
         getShape(): MarkerShape;
         getTitle(): string;
-        getVisible(): bool;
+        getVisible(): boolean;
         getZIndex(): number;
         setAnimation(animation: Animation): void;
-        setClickable(flag: bool): void;
+        setClickable(flag: boolean): void;
         setCursor(cursor: string): void;
-        setDraggable(flag: bool): void;
-        setFlat(flag: bool): void;
+        setDraggable(flag: boolean): void;
+        setFlat(flag: boolean): void;
         setIcon(icon: MarkerImage): void;
         setIcon(icon: string): void;
         setMap(map: Map): void;
@@ -216,30 +238,30 @@ declare module google.maps {
         setShadow(shadow: string): void;
         setShape(shape: MarkerShape): void;
         setTitle(title: string): void;
-        setVisible(visible: bool): void;
+        setVisible(visible: boolean): void;
         setZIndex(zIndex: number): void;
     }
 
     export interface MarkerOptions {
         animation?: Animation;
-        clickable?: bool;
+        clickable?: boolean;
         cursor?: string;
-        draggable?: bool;
-        flat?: bool;
+        draggable?: boolean;
+        flat?: boolean;
         icon?: any;
         map?: any;
-        optimized?: bool;
+        optimized?: boolean;
         position?: LatLng;
-        raiseOnDrag?: bool;
+        raiseOnDrag?: boolean;
         shadow?: any;
         shape?: MarkerShape;
         title?: string;
-        visible?: bool;
+        visible?: boolean;
         zIndex?: number;
     }
 
     export class MarkerImage {
-        constructor(url: string, size?: Size, origin?: Point, anchor?: Point, scaledSize?: Size);
+        constructor (url: string, size?: Size, origin?: Point, anchor?: Point, scaledSize?: Size);
         anchor: Point;
         origin: Point;
         scaledSize: Size;
@@ -278,10 +300,9 @@ declare module google.maps {
     }
 
     export class InfoWindow extends MVCObject {
-        constructor(opts?: InfoWindowOptions);
+        constructor (opts?: InfoWindowOptions);
         close(): void;
-        getContent(): string;
-        getContent(): Element;
+        getContent(): any; // string or Element
         getPosition(): LatLng;
         getZIndex(): number;
         open(map?: Map, anchor?: MVCObject): void;
@@ -295,7 +316,7 @@ declare module google.maps {
 
     export interface InfoWindowOptions {
         content?: any;
-        disableAutoPan?: bool;
+        disableAutoPan?: boolean;
         maxWidth?: number;
         pixelOffset?: Size;
         position?: LatLng;
@@ -303,70 +324,78 @@ declare module google.maps {
     }
 
     export class Polyline extends MVCObject {
-        constructor(opts?: PolylineOptions);
-        getEditable(): bool;
+        constructor (opts?: PolylineOptions);
+        getDraggable(): boolean;
+        getEditable(): boolean;
         getMap(): Map;
-        getPath(): MVCArray[];
-        getVisible(): bool;
-        setEditable(editable: bool): void;
+        getPath(): MVCArray;
+        getVisible(): boolean;
+        setDraggable(draggable: boolean): void;
+        setEditable(editable: boolean): void;
         setMap(map: Map): void;
         setOptions(options: PolylineOptions): void;
-        setPath(path: MVCArray[]): void;
+        setPath(path: MVCArray): void;
         setPath(path: LatLng[]): void;
-        setVisible(visible: bool): void;
+        setVisible(visible: boolean): void;
     }
 
     export interface PolylineOptions {
-        clickable?: bool;
-        editable?: bool;
-        geodesic?: bool;
+        clickable?: boolean;
+        draggable?: boolean;
+        editable?: boolean;
+        geodesic?: boolean;
         icons?: IconSequence[];
         map?: Map;
         path?: any[];
         strokeColor?: string;
         strokeOpacity?: number;
         strokeWeight?: number;
-        visible?: bool;
+        visible?: boolean;
         zIndex?: number;
     }
 
     export interface IconSequence {
+        fixedRotation?: boolean;
         icon?: Symbol;
         offset?: string;
         repeat?: string;
     }
 
     export class Polygon extends MVCObject {
-        constructor(opts?: PolygonOptions);
-        getEditable(): bool;
+        constructor (opts?: PolygonOptions);
+        getDraggable(): boolean;
+        getEditable(): boolean;
         getMap(): Map;
-        getPath(): MVCArray[];
-        getPaths(): MVCArray[][];
-        getVisible(): bool;
-        setEditable(editable: bool): void;
+        getPath(): MVCArray;
+        getPaths(): MVCArray;
+        getVisible(): boolean;
+        setDraggable(draggable: boolean): void;
+        setEditable(editable: boolean): void;
         setMap(map: Map): void;
         setOptions(options: PolygonOptions): void;
-        setPath(path: MVCArray[]): void;
+        setPath(path: MVCArray): void;
         setPath(path: LatLng[]): void;
+        setPaths(paths: MVCArray): void;
         setPaths(paths: MVCArray[]): void;
-        setPaths(paths: MVCArray[][]): void;
         setPaths(path: LatLng[]): void;
         setPaths(path: LatLng[][]): void;
-        setVisible(visible: bool): void;
+        setVisible(visible: boolean): void;
     }
 
-    export interface PolygonOptions {
-        clickable?: bool;
-        editable?: bool;
+    export interface  PolygonOptions {
+        clickable?: boolean;
+        draggable?: boolean;
+        editable?: boolean;
         fillColor?: string;
         fillOpacity?: number;
-        geodesic?: bool;
+        geodesic?: boolean;
         map?: Map;
         paths?: any[];
         strokeColor?: string;
         strokeOpacity?: number;
+        strokePosition?: StrokePosition;
         strokeWeight?: number;
-        visible?: bool;
+        visible?: boolean;
         zIndex?: number;
     }
 
@@ -377,65 +406,79 @@ declare module google.maps {
     }
 
     export class Rectangle extends MVCObject {
-        constructor(opts?: RectangleOptions);
+        constructor (opts?: RectangleOptions);
         getBounds(): LatLngBounds;
-        getEditable(): bool;
+        getDraggable(): boolean;
+        getEditable(): boolean;
         getMap(): Map;
-        getVisible(): bool;
+        getVisible(): boolean;
         setBounds(bounds: LatLngBounds): void;
-        setEditable(editable: bool): void;
+        setDraggable(draggable: boolean): void;
+        setEditable(editable: boolean): void;
         setMap(map: Map): void;
         setOptions(options: RectangleOptions): void;
-        setVisible(visible: bool): void;
+        setVisible(visible: boolean): void;
     }
 
     export interface RectangleOptions {
         bounds?: LatLngBounds;
-        clickable?: bool;
-        editable?: bool;
+        clickable?: boolean;
+        draggable?: boolean;
+        editable?: boolean;
         fillColor?: string;
         fillOpacity?: number;
         map?: Map;
         strokeColor?: string;
         strokeOpacity?: number;
+        strokePosition?: StrokePosition;
         strokeWeight?: number;
-        visible?: bool;
+        visible?: boolean;
         zIndex?: number;
     }
 
     export class Circle extends MVCObject {
-        constructor(opts?: CircleOptions);
+        constructor (opts?: CircleOptions);
         getBounds(): LatLngBounds;
         getCenter(): LatLng;
-        getEditable(): bool;
+        getDraggable(): boolean;
+        getEditable(): boolean;
         getMap(): Map;
         getRadius(): number;
-        getVisible(): bool;
+        getVisible(): boolean;
         setCenter(center: LatLng): void;
-        setEditable(editable: bool): void;
+        setDraggable(draggable: boolean): void;
+        setEditable(editable: boolean): void;
         setMap(map: Map): void;
         setOptions(options: CircleOptions): void;
         setRadius(radius: number): void;
-        setVisible(visible: bool): void;
+        setVisible(visible: boolean): void;
     }
 
     export interface CircleOptions {
         center?: LatLng;
-        clickable?: bool;
-        editable?: bool;
+        clickable?: boolean;
+        draggable?: boolean;
+        editable?: boolean;
         fillColor?: string;
         fillOpacity?: number;
         map?: Map;
         radius?: number;
         strokeColor?: string;
         strokeOpacity?: number;
+        strokePosition?: StrokePosition;
         strokeWeight?: number;
-        visible?: bool;
+        visible?: boolean;
         zIndex?: number;
+    }
+    
+    export enum StrokePosition {
+        CENTER,
+        INSIDE,
+        OUTSIDE
     }
 
     export class GroundOverlay extends MVCObject {
-        constructor(url: string, bounds: LatLngBounds, opts?: GroundOverlayOptions);
+        constructor (url: string, bounds: LatLngBounds, opts?: GroundOverlayOptions);
         getBounds(): LatLngBounds;
         getMap(): Map;
         getOpacity(): number;
@@ -445,7 +488,7 @@ declare module google.maps {
     }
 
     export interface GroundOverlayOptions {
-        clickable?: bool;
+        clickable?: boolean;
         map?: Map;
         opacity?: number;
     }
@@ -472,8 +515,8 @@ declare module google.maps {
     }
 
     export class MapCanvasProjection extends MVCObject {
-        fromContainerPixelToLatLng(pixel: Point, nowrap?: bool): LatLng;
-        fromDivPixelToLatLng(pixel: Point, nowrap?: bool): LatLng;
+        fromContainerPixelToLatLng(pixel: Point, nowrap?: boolean): LatLng;
+        fromDivPixelToLatLng(pixel: Point, nowrap?: boolean): LatLng;
         fromLatLngToContainerPixel(latLng: LatLng): Point;
         fromLatLngToDivPixel(latLng: LatLng): Point;
         getWorldWidth(): number;
@@ -481,12 +524,12 @@ declare module google.maps {
 
     /***** Services *****/
     export class Geocoder {
-        constructor();
+        constructor ();
         geocode(request: GeocoderRequest, callback: (results: GeocoderResult[], status: GeocoderStatus) => void ): void;
     }
 
     export interface GeocoderRequest {
-        address: string;
+        address?: string;
         bounds?: LatLngBounds;
         location?: LatLng;
         region?: string;
@@ -530,7 +573,7 @@ declare module google.maps {
     }
 
     export class DirectionsRenderer extends MVCObject {
-        constructor(opts?: DirectionsRendererOptions);
+        constructor (opts?: DirectionsRendererOptions);
         getDirections(): DirectionsResult;
         getMap(): Map;
         getPanel(): Element;
@@ -544,33 +587,33 @@ declare module google.maps {
 
     export interface DirectionsRendererOptions {
         directions?: DirectionsResult;
-        draggable?: bool;
-        hideRouteList?: bool;
+        draggable?: boolean;
+        hideRouteList?: boolean;
         infoWindow?: InfoWindow;
         map?: Map;
         markerOptions?: MarkerOptions;
         panel?: Element;
         polylineOptions?: PolylineOptions;
-        preserveViewport?: bool;
+        preserveViewport?: boolean;
         routeIndex?: number;
-        suppressBicyclingLayer?: bool;
-        suppressInfoWindows?: bool;
-        suppressMarkers?: bool;
-        suppressPolylines?: bool;
+        suppressBicyclingLayer?: boolean;
+        suppressInfoWindows?: boolean;
+        suppressMarkers?: boolean;
+        suppressPolylines?: boolean;
     }
 
     export class DirectionsService {
-        constructor();
+        constructor ();
         route(request: DirectionsRequest, callback: (result: DirectionsResult, status: DirectionsStatus) => void ): void;
     }
 
     export interface DirectionsRequest {
-        avoidHighways?: bool;
-        avoidTolls?: bool;
+        avoidHighways?: boolean;
+        avoidTolls?: boolean;
         destination?: any;
-        optimizeWaypoints?: bool;
+        optimizeWaypoints?: boolean;
         origin?: any;
-        provideRouteAlternatives?: bool;
+        provideRouteAlternatives?: boolean;
         region?: string;
         transitOptions?: TransitOptions;
         travelMode?: TravelMode;
@@ -597,7 +640,7 @@ declare module google.maps {
 
     export interface DirectionsWaypoint {
         location: any;
-        stopover: bool;
+        stopover: boolean;
     }
 
     export enum DirectionsStatus {
@@ -706,7 +749,7 @@ declare module google.maps {
     }
 
     export class ElevationService {
-        constructor();
+        constructor ();
         getElevationAlongPath(request: PathElevationRequest, callback: (results: ElevationResult[], status: ElevationStatus) => void ): void;
         getElevationForLocations(request: LocationElevationRequest, callback: (results: ElevationResult[], status: ElevationStatus) => void ): void;
     }
@@ -735,7 +778,7 @@ declare module google.maps {
     }
 
     export class MaxZoomService {
-        constructor();
+        constructor ();
         getMaxZoomAtLatLng(latlng: LatLng, callback: (result: MaxZoomResult) => void ): void;
     }
 
@@ -750,13 +793,13 @@ declare module google.maps {
     }
 
     export class DistanceMatrixService {
-        constructor();
+        constructor ();
         getDistanceMatrix(request: DistanceMatrixRequest, callback: (response: DistanceMatrixResponse, status: DistanceMatrixStatus) => void ): void;
     }
 
     export interface DistanceMatrixRequest {
-        avoidHighways?: bool;
-        avoidTolls?: bool;
+        avoidHighways?: boolean;
+        avoidTolls?: boolean;
         destinations?: any[];
         origins?: any[];
         region?: string;
@@ -810,24 +853,26 @@ declare module google.maps {
     }
 
     export class MapTypeRegistry extends MVCObject {
-        constructor();
-        set (id: string, mapType: MapType): void;
+        constructor ();
+        set(id: string, mapType: MapType): void;
     }
 
     export interface Projection {
         fromLatLngToPoint(latLng: LatLng, point?: Point): Point;
-        fromPointToLatLng(pixel: Point, noWrap?: bool): LatLng;
+        fromPointToLatLng(pixel: Point, noWrap?: boolean): LatLng;
     }
 
-    export class ImageMapType {
-        constructor(opts: ImageMapTypeOptions);
+    export class ImageMapType extends MVCObject implements MapType {
+        constructor (opts: ImageMapTypeOptions);
         getOpacity(): number;
         setOpacity(opacity: number): void;
+        getTile(tileCoord: Point, zoom: number, ownerDocument: Document): Element;
+        releaseTile(tile: Element): void;
     }
 
     export interface ImageMapTypeOptions {
         alt?: string;
-        getTileUrl: (Point, number) => string;
+        getTileUrl: (tileCoord: Point, zoom: number) => string;
         maxZoom?: number;
         minZoom?: number;
         name?: string;
@@ -836,7 +881,7 @@ declare module google.maps {
     }
 
     export class StyledMapType {
-        constructor(styles: MapTypeStyle[], options?: StyledMapTypeOptions);
+        constructor (styles: MapTypeStyle[], options?: StyledMapTypeOptions);
     }
 
     export interface StyledMapTypeOptions {
@@ -902,7 +947,7 @@ declare module google.maps {
     export interface MapTypeStyler {
         gamma?: number;
         hue?: string;
-        invert_lightness?: bool;
+        invert_lightness?: boolean;
         lightness?: number;
         saturation?: number;
         visibility?: string;
@@ -910,25 +955,25 @@ declare module google.maps {
 
     /***** Layers *****/
     export class BicyclingLayer extends MVCObject {
-        constructor();
+        constructor ();
         getMap(): Map;
         setMap(map: Map): void;
     }
 
     export class FusionTablesLayer extends MVCObject {
-        constructor(options: FusionTablesLayerOptions);
+        constructor (options: FusionTablesLayerOptions);
         getMap(): Map;
         setMap(map: Map): void;
         setOptions(options: FusionTablesLayerOptions): void;
     }
 
     export interface FusionTablesLayerOptions {
-        clickable?: bool;
+        clickable?: boolean;
         heatmap?: FusionTablesHeatmap;
         map?: Map;
         query?: FusionTablesQuery;
         styles?: FusionTablesStyle[];
-        suppressInfoWindows?: bool;
+        suppressInfoWindows?: boolean;
     }
 
     export interface FusionTablesQuery {
@@ -940,7 +985,7 @@ declare module google.maps {
         where?: string;
     }
 
-    export interface FusionTablesStyle {
+    export  interface FusionTablesStyle {
         markerOptions?: FusionTablesMarkerOptions;
         polygonOptions?: FusionTablesPolygonOptions;
         polylineOptions?: FusionTablesPolylineOptions;
@@ -948,7 +993,7 @@ declare module google.maps {
     }
 
     export interface FusionTablesHeatmap {
-        enabled: bool;
+        enabled: boolean;
     }
 
     export interface FusionTablesMarkerOptions {
@@ -982,7 +1027,7 @@ declare module google.maps {
     }
 
     export class KmlLayer extends MVCObject {
-        constructor(url: string, opts?: KmlLayerOptions);
+        constructor (url: string, opts?: KmlLayerOptions);
         getDefaultViewport(): LatLngBounds;
         getMap(): Map;
         getMetadata(): KmlLayerMetadata;
@@ -992,10 +1037,10 @@ declare module google.maps {
     }
 
     export interface KmlLayerOptions {
-        clickable?: bool;
+        clickable?: boolean;
         map?: Map;
-        preserveViewport?: bool;
-        suppressInfoWindows?: bool;
+        preserveViewport?: boolean;
+        suppressInfoWindows?: boolean;
     }
 
     export interface KmlLayerMetadata {
@@ -1039,51 +1084,51 @@ declare module google.maps {
     }
 
     export class TrafficLayer extends MVCObject {
-        constructor();
+        constructor ();
         getMap(): void;
         setMap(map: Map): void;
     }
 
     export class TransitLayer extends MVCObject {
-        constructor();
+        constructor ();
         getMap(): void;
         setMap(map: Map): void;
     }
 
     /***** Street View *****/
     export class StreetViewPanorama {
-        constructor(container: Element, opts?: StreetViewPanoramaOptions);
+        constructor (container: Element, opts?: StreetViewPanoramaOptions);
         controls: MVCArray[];
         getLinks(): StreetViewLink[];
         getPano(): string;
         getPosition(): LatLng;
         getPov(): StreetViewPov;
-        getVisible(): bool;
-        registerPanoProvider(provider: (input: string) => StreetViewPanoramaData);
+        getVisible(): boolean;
+        registerPanoProvider(provider: (input: string) => StreetViewPanoramaData): void;
         setPano(pano: string): void;
         setPosition(latLng: LatLng): void;
         setPov(pov: StreetViewPov): void;
-        setVisible(flag: bool): void;
+        setVisible(flag: boolean): void;
 
     }
 
     export interface StreetViewPanoramaOptions {
-        addressControl?: bool;
+        addressControl?: boolean;
         addressControlOptions?: StreetViewAddressControlOptions;
-        clickToGo?: bool;
-        disableDoubleClickZoom?: bool;
-        enableCloseButton?: bool;
-        imageDateControl?: bool;
-        linksControl?: bool;
-        panControl?: bool;
+        clickToGo?: boolean;
+        disableDoubleClickZoom?: boolean;
+        enableCloseButton?: boolean;
+        imageDateControl?: boolean;
+        linksControl?: boolean;
+        panControl?: boolean;
         panControlOptions?: PanControlOptions;
         pano?: string;
         panoProvider?: (input: string) => StreetViewPanoramaData;
         position?: LatLng;
         pov?: StreetViewPov;
-        scrollwheel?: bool;
-        visible?: bool;
-        zoomControl?: bool;
+        scrollwheel?: boolean;
+        visible?: boolean;
+        zoomControl?: boolean;
         zoomControlOptions?: ZoomControlOptions;
     }
 
@@ -1099,7 +1144,7 @@ declare module google.maps {
 
     export interface StreetViewPov {
         heading?: number;
-        picth?: number;
+        pitch?: number;
         zoom?: number;
     }
 
@@ -1123,9 +1168,9 @@ declare module google.maps {
         worldSize?: Size;
     }
 
-    export interface StreetViewService {
-        getPanoramaById(pano: string, callback: (streetViewPanoramaData: StreetViewPanoramaData, streetViewStatus: StreetViewStatus) => void );
-        getPanoramaByLocation(latlng: LatLng, radius: number, callback: (streetViewPanoramaData: StreetViewPanoramaData, streetViewStatus: StreetViewStatus) => void );
+    export class StreetViewService {
+        getPanoramaById(pano: string, callback: (streetViewPanoramaData: StreetViewPanoramaData, streetViewStatus: StreetViewStatus) => void ): void;
+        getPanoramaByLocation(latlng: LatLng, radius: number, callback: (streetViewPanoramaData: StreetViewPanoramaData, streetViewStatus: StreetViewStatus) => void ): void;
     }
 
     export enum StreetViewStatus {
@@ -1135,13 +1180,13 @@ declare module google.maps {
     }
 
     /***** Event *****/
-    export interface MapsEventListener {}
+    export interface MapsEventListener { }
 
     export class event {
-        static addDomListener(instance: any, eventName: string, handler: (event?: any, ...args: any[]) => void , capture?: bool): MapsEventListener;
-        static addDomListener(instance: any, eventName: string, handler: Function, capture?: bool): MapsEventListener;
-        static addDomListenerOnce(instance: any, eventName: string, handler: (event?: any, ...args: any[]) => void , capture?: bool): MapsEventListener;
-        static addDomListenerOnce(instance: any, eventName: string, handler: Function, capture?: bool): MapsEventListener;
+        static addDomListener(instance: any, eventName: string, handler: (event?: any, ...args: any[]) => void , capture?: boolean): MapsEventListener;
+        static addDomListener(instance: any, eventName: string, handler: Function, capture?: boolean): MapsEventListener;
+        static addDomListenerOnce(instance: any, eventName: string, handler: (event?: any, ...args: any[]) => void , capture?: boolean): MapsEventListener;
+        static addDomListenerOnce(instance: any, eventName: string, handler: Function, capture?: boolean): MapsEventListener;
         static addListener(instance: any, eventName: string, handler: (event?: any, ...args: any[]) => void ): MapsEventListener;
         static addListener(instance: any, eventName: string, handler: Function): MapsEventListener;
         static addListenerOnce(instance: any, eventName: string, handler: (event?: any, ...args: any[]) => void ): MapsEventListener;
@@ -1159,8 +1204,8 @@ declare module google.maps {
 
     /***** Base *****/
     export class LatLng {
-        constructor(lat: number, lng: number, noWrap?: bool);
-        equals(other: LatLng): bool;
+        constructor (lat: number, lng: number, noWrap?: boolean);
+        equals(other: LatLng): boolean;
         lat(): number;
         lng(): number;
         toString(): string;
@@ -1169,15 +1214,15 @@ declare module google.maps {
     }
 
     export class LatLngBounds {
-        constructor(sw?: LatLng, ne?: LatLng);
-        contains(latLng: LatLng): bool;
-        equals(other: LatLngBounds): bool;
+        constructor (sw?: LatLng, ne?: LatLng);
+        contains(latLng: LatLng): boolean;
+        equals(other: LatLngBounds): boolean;
         extend(point: LatLng): LatLngBounds;
         getCenter(): LatLng;
         getNorthEast(): LatLng;
         getSouthWest(): LatLng;
-        intersects(other: LatLngBounds): bool;
-        isEmpty(): bool;
+        intersects(other: LatLngBounds): boolean;
+        isEmpty(): boolean;
         toSpan(): LatLng;
         toString(): string;
         toUrlValue(precision?: number): string;
@@ -1185,25 +1230,25 @@ declare module google.maps {
     }
 
     export class Point {
-        constructor(x: number, y: number);
+        constructor (x: number, y: number);
         x: number;
         y: number;
-        equals(other: Point): bool;
+        equals(other: Point): boolean;
         toString(): string;
     }
 
     export class Size {
-        constructor(width: number, height: number, widthUnit?: string, heightUnit?: string);
+        constructor (width: number, height: number, widthUnit?: string, heightUnit?: string);
         height: number;
         width: number;
-        equals(other: Size): bool;
+        equals(other: Size): boolean;
         toString(): string;
     }
 
     /***** Geometry Library *****/
     export module geometry {
         export class encoding {
-            static decodePath(encodedPath: string): LatLng;
+            static decodePath(encodedPath: string): LatLng[];
             static encodePath(path: any[]): string;
         }
 
@@ -1218,15 +1263,15 @@ declare module google.maps {
         }
 
         export class poly {
-            containsLocation(point: LatLng, polygon: Polygon): bool;
-            isLocationOnEdge(point: LatLng, poly: any, tolerance?: number): bool;
+            static containsLocation(point: LatLng, polygon: Polygon): boolean;
+            static isLocationOnEdge(point: LatLng, poly: any, tolerance?: number): boolean;
         }
     }
 
     /***** AdSense Library *****/
     export module adsense {
         export class AdUnit extends MVCObject {
-            constructor(container: Element, opts: AdUnitOptions);
+            constructor (container: Element, opts: AdUnitOptions);
             getChannelNumber(): string;
             getContainer(): Element;
             getFormat(): AdFormat;
@@ -1266,7 +1311,7 @@ declare module google.maps {
     /***** Panoramio Library *****/
     export module panoramio {
         export class PanoramioLayer extends MVCObject {
-            constructor(opts?: PanoramioLayerOptions);
+            constructor (opts?: PanoramioLayerOptions);
             getMap(): Map;
             getTag(): string;
             getUserId(): string;
@@ -1278,7 +1323,7 @@ declare module google.maps {
 
         export interface PanoramioLayerOptions {
             map?: Map;
-            suppressInfoWindows?: bool;
+            suppressInfoWindows?: boolean;
             tag?: string;
             userId?: string;
         }
@@ -1302,7 +1347,7 @@ declare module google.maps {
     export module places {
 
         export class Autocomplete extends MVCObject {
-            constructor(inputField: HTMLInputElement, opts?: AutocompleteOptions);
+            constructor (inputField: HTMLInputElement, opts?: AutocompleteOptions);
             getBounds(): LatLngBounds;
             getPlace(): PlaceResult;
             setBounds(bounds: LatLngBounds): void;
@@ -1311,9 +1356,9 @@ declare module google.maps {
         }
 
         export interface AutocompleteOptions {
-            bounds: LatLngBounds;
-            componentRestrictions: ComponentRestrictions;
-            types: string[];
+            bounds?: LatLngBounds;
+            componentRestrictions?: ComponentRestrictions;
+            types?: string[];
         }
 
         export interface ComponentRestrictions {
@@ -1359,12 +1404,12 @@ declare module google.maps {
 
         export interface PlaceSearchPagination {
             nextPage(): void;
-            hasNextPage: bool;
+            hasNextPage: boolean;
         }
 
         export class PlacesService {
-            constructor(attrContainer: HTMLDivElement);
-            constructor(attrContainer: Map);
+            constructor (attrContainer: HTMLDivElement);
+            constructor (attrContainer: Map);
             getDetails(request: PlaceDetailsRequest, callback: (result: PlaceResult, status: PlacesServiceStatus) => void ): void;
             nearbySearch(request: PlaceSearchRequest, callback: (results: PlaceResult[], status: PlacesServiceStatus, pagination: PlaceSearchPagination) => void ): void;
             textSearch(request: TextSearchRequest, callback: (results: PlaceResult[], status: PlacesServiceStatus) => void ): void;
@@ -1383,6 +1428,17 @@ declare module google.maps {
             DISTANCE,
             PROMINENCE
         }
+		
+		export class SearchBox {
+			constructor(inputField: HTMLInputElement, opts?: SearchBoxOptions);
+			getBounds(): LatLngBounds;
+			setBounds(bounds: LatLngBounds): void;
+			getPlaces(): PlaceResult[];			
+		}
+
+		export interface SearchBoxOptions {
+			bounds: LatLngBounds;
+		}
 
         export interface TextSearchRequest {
             bounds: LatLngBounds;
@@ -1394,7 +1450,7 @@ declare module google.maps {
 
     export module drawing {
         export class DrawingManager extends MVCObject {
-            constructor(options?: DrawingManagerOptions);
+            constructor (options?: DrawingManagerOptions);
             getDrawingMode(): OverlayType;
             getMap(): Map;
             setDrawingMode(drawingMode: OverlayType): void;
@@ -1402,21 +1458,21 @@ declare module google.maps {
             setOptions(options: DrawingManagerOptions): void;
         }
 
-        export interface DrawingManagerOptions {
-            circleOptions: CircleOptions;
-            drawingControl: bool;
-            drawingControlOptions: DrawingControlOptions;
-            drawingMode: OverlayType;
-            map: Map;
-            markerOptions: MarkerOptions;
-            polygonOptions: PolygonOptions;
-            polylineOptions: PolylineOptions;
-            rectangleOptions: RectangleOptions;
+        export interface  DrawingManagerOptions {
+            circleOptions?: CircleOptions;
+            drawingControl?: boolean;
+            drawingControlOptions?: DrawingControlOptions;
+            drawingMode?: OverlayType;
+            map?: Map;
+            markerOptions?: MarkerOptions;
+            polygonOptions?: PolygonOptions;
+            polylineOptions?: PolylineOptions;
+            rectangleOptions?: RectangleOptions;
         }
 
         export interface DrawingControlOptions {
-            drawingModes: OverlayType[];
-            position: ControlPosition;
+            drawingModes?: OverlayType[];
+            position?: ControlPosition;
         }
 
         export interface OverlayCompleteEvent {
@@ -1435,22 +1491,22 @@ declare module google.maps {
 
     export module weather {
         export class CloudLayer extends MVCObject {
-            constructor();
+            constructor ();
             getMap(): Map;
             setMap(map: Map): void;
         }
         export class WeatherLayer extends MVCObject {
-            constructor(opts?: WeatherLayerOptions);
+            constructor (opts?: WeatherLayerOptions);
             getMap(): Map;
             setMap(map: Map): void;
             setOptions(options: WeatherLayerOptions): void;
         }
 
         export interface WeatherLayerOptions {
-            clickable: bool;
+            clickable: boolean;
             labelColor: LabelColor;
             map: Map;
-            suppressInfoWindows: bool;
+            suppressInfoWindows: boolean;
             temperatureUnits: TemperatureUnit;
             windSpeedUnits: WindSpeedUnit;
         }
@@ -1508,7 +1564,7 @@ declare module google.maps {
     }
     export module visualization {
         export class HeatmapLayer extends MVCObject {
-            constructor(opts?: HeatmapLayerOptions);
+            constructor (opts?: HeatmapLayerOptions);
             getData(): MVCArray;
             getMap(): Map;
             setData(data: MVCArray): void;
@@ -1519,7 +1575,7 @@ declare module google.maps {
 
         export interface HeatmapLayerOptions {
             data: LatLng[];
-            dissipating: bool;
+            dissipating: boolean;
             gradient: string[];
             map: Map;
             maxIntensity: number;
@@ -1538,6 +1594,6 @@ declare module google.maps {
 
         export class MapsEventListener {
 
-        }
+        }        
     }
 }

@@ -22,7 +22,7 @@ module.exports = function (grunt) {
             }
         },
         watch: {
-            files: '**/*.ts',
+            files: 'app/**/*.ts',
             tasks: ['typescript']
         },
         open: {

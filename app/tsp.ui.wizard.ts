@@ -3,7 +3,7 @@
 module tsp.ui.wizard {
     export interface Step {
         enter(args: any);
-        completed: KnockoutObservableBool;
+        completed: KnockoutObservable<boolean>;
         key: string;
     }
 

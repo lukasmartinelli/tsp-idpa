@@ -52,7 +52,7 @@ module tsp.mst {
             return vertices;
         }
 
-        private edgeTouchesVerticesOneTime(edge: tsp.graph.Edge, vertices: tsp.graph.Vertex[]): bool {
+        private edgeTouchesVerticesOneTime(edge: tsp.graph.Edge, vertices: tsp.graph.Vertex[]): boolean {
             return (_.indexOf(vertices, edge.from) != -1 || _.indexOf(vertices, edge.to) == -1) && (_.indexOf(vertices, edge.from) == -1 || _.indexOf(vertices, edge.to) != -1);
         }
 

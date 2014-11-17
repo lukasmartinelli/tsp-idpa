@@ -1,5 +1,4 @@
 /// <reference path="../definitions/knockout.d.ts" />
-/// <reference path="../definitions/simrou.d.ts" />
 /// <reference path="tsp.graph.ts" />
 /// <reference path="tsp.visual.graph.ts" />
 /// <reference path="tsp.visual.maps.ts" />
@@ -17,7 +16,7 @@ module tsp.ui.result {
 
         completed = ko.observable(false);
         key = "result";
-        algorithmResult = ko.observable();
+        algorithmResult = ko.observable<ResultViewModel>();
         showDistances = ko.observable(true);
         showVertices = ko.observable(true);
 
@@ -76,9 +75,9 @@ module tsp.ui.result {
     }
 
     export class ResultViewModel {
-        executionTime: KnockoutObservableNumber;
-        totalWeight: KnockoutObservableNumber;
-        graphColor: KnockoutObservableString;
+        executionTime: KnockoutObservable<number>;
+        totalWeight: KnockoutObservable<number>;
+        graphColor: KnockoutObservable<string>;
 
         _route: tsp.graph.Route;
         _visualRoute: tsp.visual.maps.GoogleRoute;

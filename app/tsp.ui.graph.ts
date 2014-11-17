@@ -1,5 +1,4 @@
 /// <reference path="../definitions/knockout.d.ts" />
-/// <reference path="../definitions/simrou.d.ts" />
 /// <reference path="tsp.ui.wizard.ts" />
 /// <reference path="tsp.visual.graph.ts" />
 /// <reference path="tsp.graph.ts" />
@@ -8,7 +7,7 @@ declare var router: Simrou;
 module tsp.ui.graph {
     export class GraphStep implements tsp.ui.wizard.Step {
         key = "graph";
-        addresses = ko.observableArray();
+        addresses = ko.observableArray<tsp.visual.graph.GoogleAddress>();
         pending = ko.observable(false);
         graph: tsp.graph.UndirectedGraph;
         completed = ko.observable(false);

@@ -27,7 +27,7 @@ module tsp.visual.graph {
             return deferred;
         }
 
-        private getDistanceMatrix(origin: GoogleAddressVertex, destinations: GoogleAddressVertex[], timeout: number): JQueryPromise {
+        private getDistanceMatrix(origin: GoogleAddressVertex, destinations: GoogleAddressVertex[], timeout: number): JQueryPromise<google.maps.DistanceMatrixResponse> {
             var deferred = $.Deferred();
             window.setTimeout(() => {
                 this._distanceService.getDistanceMatrix({
@@ -36,7 +36,8 @@ module tsp.visual.graph {
                     travelMode: google.maps.TravelMode.DRIVING,
                     avoidHighways: false,
                     avoidTolls: false
-                }, (response, status) => {
+                    }, (response: google.maps.DistanceMatrixResponse,
+                        status: google.maps.DistanceMatrixStatus) => {
                     if (status == google.maps.DistanceMatrixStatus.OK) {
                         deferred.resolve(response);
                     } else {
@@ -48,7 +49,7 @@ module tsp.visual.graph {
             return deferred;
         }
 
-        private getDistances(vertices: tsp.graph.Vertex[]): JQueryPromise {
+        private getDistances(vertices: tsp.graph.Vertex[]): JQueryPromise<google.maps.DistanceMatrixResponse[]> {
             var throttling = tsp.graph.UndirectedGraph.getEdgeCount(vertices.length) * 3;
             var calls = [];
 
@@ -83,7 +84,7 @@ module tsp.visual.graph {
             return $.when.apply($, calls);
         }
 
-        private findAddress(name: string, timeout: number): JQueryPromise {
+        private findAddress(name: string, timeout: number): JQueryPromise< GoogleAddressVertex> {
             var deferred = $.Deferred();
             window.setTimeout(() => {
                 this._geocoder.geocode({ address: name }, (results: google.maps.GeocoderResult[], status: google.maps.GeocoderStatus) => {
@@ -98,7 +99,7 @@ module tsp.visual.graph {
             return deferred;
         }
 
-        private findAddresses(addresses: GoogleAddress[]): JQueryPromise {
+        private findAddresses(addresses: GoogleAddress[]): JQueryPromise<GoogleAddressVertex[]> {
             var throttling = addresses.length * 25;
             var calls = [];
 
@@ -125,8 +126,8 @@ module tsp.visual.graph {
     }
 
     export class GoogleAddress {
-        name: KnockoutObservableString;
-        found: KnockoutObservableBool;
+        name: KnockoutObservable<string>;
+        found: KnockoutObservable<boolean>;
 
         constructor(name: string) {
             this.name = ko.observable(name);
