@@ -1,20 +1,23 @@
 module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-typescript');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-express-server');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-open');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        express: {
-            options: {
-                port: 3000,
+        connect: {
+            server: {
+                options: {
+                    port: 8080,
+                    base: './'
+                }
             }
         },
         typescript: {
             base: {
                 src: ['app/**/*.ts'],
-                dest: 'tsp.js',
+                dest: 'js/tsp.js',
                 options: {
                     module: 'amd',
                     target: 'es5'
@@ -27,11 +30,11 @@ module.exports = function (grunt) {
         },
         open: {
             dev: {
-                path: 'http://localhost:3000/index.html'
+                path: 'http://localhost:8080/index.html'
             }
         }
     });
 
-    grunt.registerTask('default', ['express', 'open', 'watch']);
+    grunt.registerTask('default', ['connect', 'open', 'watch']);
 
 }
