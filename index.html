@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="de-de">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Theorie und Anwendung von Algorithmen für das Travelling Salesman Problem.">
+    <meta name="viewport" content="width=device-width">
+    <title>Travelling Salesman problem</title>
+    <link href="//cdn.jsdelivr.net/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="//cdn.jsdelivr.net/bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="navbar navbar-static-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a href="#" class="brand">TSP Algorithmen</a>
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li class="active"><a href="index.html">Anwendung</a></li>
+                        <li><a href="theorie.html">Theorie</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="container" class="container">
+        <div id="tsp-wizard" class="row">
+            <div id="tsp-map-canvas"></div>
+            <h1>Route berechnen</h1>
+            <ul id="tsp-wizard-steps" class="nav nav-pills">
+                <li data-bind="css: { active: currentStep == 'start' }">
+                    <a href="/#/wizard/start" data-bind="css: { disabled: !isActive(start.key) }">Start</a>
+                </li>
+                <li data-bind="css: { active: currentStep == 'graph' }">
+                    <a href="/#/wizard/graph" data-bind="css: { disabled: !isActive(graph.key) }">Knoten</a>
+                </li>
+                <li data-bind="css: { active: currentStep == 'algorithm' }">
+                    <a href="/#/wizard/algorithm" data-bind="css: { disabled: !isActive(algorithm.key) }">Algorithmus</a>
+                </li>
+                <li data-bind="css: { active: currentStep == 'result' }">
+                    <a href="/#/wizard/result" data-bind="css: { disabled: !isActive(result.key) }">Auswertung</a>
+                </li>
+            </ul>
+            <div class="well">
+                <form data-bind="with: start, fadeVisible: isVisible(start.key)" id="tsp-wizard-step1">
+                    <fieldset class="container form-horizontal">
+                        <legend>Folgen Sie dem Wizard um eine Route zu berechnen</legend>
+                        <p>Wählen Sie eine Methode aus wie sie die Knoten definieren möchten.</p>
+                        <div class="control-group" style="max-width: 400px;" data-toggle="buttons-radio">
+                            <a href="/#/wizard/graph" data-bind="click: predefinedDataMany" class="btn btn-large btn-block btn-primary">Vordefinierte Knoten (viele)
+                            </a>
+                            <a href="/#/wizard/graph" data-bind="click: predefinedDataFew" class="btn btn-large btn-block ">Vordefinierte Knoten (wenige)
+                            </a>
+                            <a href="/#/wizard/graph" data-bind="click: userdefinedData" class="btn btn-large btn-block">Eigene Knoten
+                            </a>
+                        </div>
+                    </fieldset>
+                </form>
+                <form data-bind="with: graph, fadeVisible: isVisible(graph.key)" id="tsp-wizard-step2">
+                    <fieldset class="container form-horizontal">
+                        <legend>Zieladressen eingeben</legend>
+                        <!-- ko foreach:addresses -->
+                        <div class="control-group">
+                            <label class="control-label">Addresse</label>
+                            <div class="controls">
+                                <input data-bind="value: name" type="text" class="input-xlarge">
+                                <i data-bind="visible: found" class="icon-ok"></i>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                        <div class="form-actions">
+                            <a data-bind="click: addAddress, css: { disabled: pending }" class="btn">Adresse hinzufügen</a>
+                            <a href="/#/wizard/algorithm" data-bind="click: createGraph, css: { disabled: pending }" class="btn btn-primary">Distanzen berechnen</a>
+                        </div>
+                    </fieldset>
+                </form>
+                <form data-bind="with: algorithm, fadeVisible: isVisible(algorithm.key)" id="tsp-wizard-step3">
+                    <fieldset class="container form-horizontal">
+                        <legend>Algorithmus auswählen</legend>
+                        <p>Wählen Sie einen Algorithmus aus.</p>
+                        <p data-bind="visible: backtrackingEnabled() == false">Vollständige Enumeration steht nicht zur Verfügung, da die Anzahl Knoten zu gross ist (>10). Dieser Algorithmus würde zuviel Zeit benötigen.</p>
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active"><a data-toggle="tab" href="#tsp-aoc">Ameisenalgorithmus</a></li>
+                            <li data-bind="visible: backtrackingEnabled"><a data-toggle="tab" href="#tsp-backtracking">Vollständige Enumeration</a></li>
+							<li><a data-toggle="tab" href="#tsp-twoapprox">2-Approximation</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div data-bind="with: antColonyAlgorithm" class="tab-pane fade in active" id="tsp-aoc">
+                                <div class="control-group">
+                                    <label class="control-label">Anzahl Ameisen</label>
+                                    <div class="controls">
+                                        <input data-bind="value: antCount" type="text" class="input-xlarge">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Anzahl Durchläufe</label>
+                                    <div class="controls">
+                                        <input data-bind="value: waveCount" type="text" class="input-xlarge">
+                                    </div>
+                                </div>
+                                <div data-bind="visible: $parent.calculating">
+                                    <div class="progress progress-striped active">
+                                        <div class="bar" data-bind="style: { width: $parent.progress + '%' }"></div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button data-bind="click: run" class="btn btn-primary">Route ermitteln</button>
+                                </div>
+                            </div>
+                            <div data-bind="with: backtrackingAlgorithm" class="tab-pane fade" id="tsp-backtracking">
+                                <div data-bind="visible: $parent.calculating">
+                                    <div class="progress progress-striped active">
+                                        <div class="bar" data-bind="style: { width: $parent.progress + '%' }"></div>
+                                    </div>
+                                </div>
+                                <p>Es gibt keine Parameter die verändert werden können.</p>
+                                <div class="form-actions">
+                                    <button data-bind="click: run" class="btn btn-primary">Route ermitteln</button>
+                                </div>
+                            </div>
+                            <div data-bind="with: twoApproxAlgorithm" class="tab-pane fade" id="tsp-twoapprox">
+                                <div data-bind="visible: $parent.calculating">
+                                    <div class="progress progress-striped active">
+                                        <div class="bar" data-bind="style: { width: $parent.progress + '%' }"></div>
+                                    </div>
+                                </div>
+                                <p>Es gibt keine Parameter die verändert werden können.</p>
+                                <div class="form-actions">
+                                    <button data-bind="click: run" class="btn btn-primary">Route ermitteln</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </form>
+                <form data-bind="with: result, fadeVisible: isVisible(result.key)" id="tsp-wizard-step4">
+                    <fieldset dclass="container form-horizontal">
+                        <legend>Auswertung</legend>
+						<!-- ko with: algorithmResult -->  
+                        <div class="control-group">
+                            <label class="control-label">Länge</label>
+                            <div class="controls">
+                                <input data-bind="value: totalWeight" />
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Benötigte Berechnungszeit</label>
+                            <div class="controls">
+                                <input data-bind="value: executionTime" />
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <label class="checkbox">
+                                <input data-bind="checked: showRoute" type="checkbox">Route anzeigen
+                            </label>
+                            <label data-bind="visible: pheromonTrailEnabled" class="checkbox">
+                                <input data-bind="checked: showPheronomTrail" type="checkbox">Pheronom Spur anzeigen
+                            </label>
+                            <label class="checkbox">
+                                <input data-bind="checked: $parent.showDistances" type="checkbox">Verbindungen anzeigen
+                            </label>
+                            <label class="checkbox">
+                                <input data-bind="checked: $parent.showVertices" type="checkbox">Knoten anzeigen
+                            </label>
+                            <a class="btn btn-primary" data-bind="click: $parent.recalculate">Anderer Algorithmus wählen</a>
+                        </div>
+						<!-- /ko -->
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/knockout/2.2.1/knockout-2.2.1.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+    <script src="//cdn.jsdelivr.net/bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="js/simrou.js"></script>
+    <script src="js/tsp.js"></script>
+    <script>
+        $(function () {
+            var app = new tsp.App();
+            app.start();
+        });
+    </script>
+</body>
+</html>
