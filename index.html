@@ -6,34 +6,12 @@
     <meta name="description" content="Theorie und Anwendung von Algorithmen für das Travelling Salesman Problem.">
     <meta name="viewport" content="width=device-width">
     <title>Travelling Salesman problem</title>
-    <link href="//cdn.jsdelivr.net/bootstrap/2.3.2/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="//cdn.jsdelivr.net/bootstrap/2.3.2/css/bootstrap-responsive.min.css" rel="stylesheet" />
-    <link href="main.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="navbar navbar-static-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </a>
-                <a href="#" class="brand">TSP Algorithmen</a>
-                <div class="nav-collapse collapse">
-                    <ul class="nav">
-                        <li class="active"><a href="index.html">Anwendung</a></li>
-                        <li><a href="theorie.html">Theorie</a></li>
-                        <li><a href="#contact">Kontakt</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="container" class="container">
         <div id="tsp-wizard" class="row">
-            <div id="tsp-map-canvas"></div>
             <h1>Route berechnen</h1>
             <ul id="tsp-wizard-steps" class="nav nav-pills">
                 <li data-bind="css: { active: currentStep == 'start' }">
@@ -57,9 +35,9 @@
                         <div class="control-group" style="max-width: 400px;" data-toggle="buttons-radio">
                             <a href="/#/wizard/graph" data-bind="click: predefinedDataMany" class="btn btn-large btn-block btn-primary">Vordefinierte Knoten (viele)
                             </a>
-                            <a href="/#/wizard/graph" data-bind="click: predefinedDataFew" class="btn btn-large btn-block ">Vordefinierte Knoten (wenige)
+                            <a href="/#/wizard/graph" data-bind="click: predefinedDataFew" class="btn btn-default btn-large btn-block ">Vordefinierte Knoten (wenige)
                             </a>
-                            <a href="/#/wizard/graph" data-bind="click: userdefinedData" class="btn btn-large btn-block">Eigene Knoten
+                            <a href="/#/wizard/graph" data-bind="click: userdefinedData" class="btn btn-default btn-large btn-block">Eigene Knoten
                             </a>
                         </div>
                     </fieldset>
@@ -77,7 +55,7 @@
                         </div>
                         <!-- /ko -->
                         <div class="form-actions">
-                            <a data-bind="click: addAddress, css: { disabled: pending }" class="btn">Adresse hinzufügen</a>
+                            <a data-bind="click: addAddress, css: { disabled: pending }" class="btn btn-default">Adresse hinzufügen</a>
                             <a href="/#/wizard/algorithm" data-bind="click: createGraph, css: { disabled: pending }" class="btn btn-primary">Distanzen berechnen</a>
                         </div>
                     </fieldset>
@@ -176,6 +154,7 @@
                     </fieldset>
                 </form>
             </div>
+            <div id="tsp-map-canvas"></div>
         </div>
     </div>
     <script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
