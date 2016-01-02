@@ -27,14 +27,8 @@ module.exports = function (grunt) {
         watch: {
             files: 'app/**/*.ts',
             tasks: ['typescript']
-        },
-        open: {
-            dev: {
-                path: 'http://localhost:8080/index.html'
-            }
         }
     });
 
-    grunt.registerTask('default', ['connect', 'open', 'watch']);
-
+    grunt.registerTask('default', ['typescript', 'connect', 'watch']);
 }
